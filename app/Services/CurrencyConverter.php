@@ -9,7 +9,6 @@ class CurrencyConverter
     private $apiKey;
 
     protected $baseUrl = 'https://api.freecurrencyapi.com/v1/';
-
     public function __construct(string $apiKey)
     {
         $this->apiKey = $apiKey;
@@ -26,7 +25,6 @@ class CurrencyConverter
             ]);
 
         $result = $response->json();
-//dd($result);
         return $result[$q]['val'] * $amount;
     }
 }
