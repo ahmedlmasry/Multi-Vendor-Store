@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AccessTokensController;
+use App\Http\Controllers\Api\DeliveryController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,4 +18,7 @@ Route::group(['prefix'=>'v1'], function () {
 
     Route::delete('auth/access-tokens/{token?}', [AccessTokensController::class, 'destroy'])
         ->middleware('auth:sanctum');
+
+    Route::get('deliveries/{delivery}', [DeliveryController::class, 'show']);
+    Route::put('deliveries/{delivery}', [DeliveryController::class, 'update']);
 });

@@ -1,7 +1,6 @@
 @php use App\Helpers\Currency; @endphp
 @inject('carts','App\Models\Cart')
-
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
 <head>
@@ -18,6 +17,8 @@
     <link rel="stylesheet" href="{{asset('assets/css/tiny-slider.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/glightbox.min.css')}}"/>
     <link rel="stylesheet" href="{{asset('assets/css/main.css')}}"/>
+{{--    <script src="https://js.stripe.com/v3/"></script>--}}
+
 
 </head>
 

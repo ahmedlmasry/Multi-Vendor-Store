@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Front;
 
-
 use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Models\OP;
@@ -13,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Intl\Countries;
 use Throwable;
-
 
 class CheckoutController extends Controller
 {
@@ -27,7 +25,6 @@ class CheckoutController extends Controller
             'countries' => Countries::getNames(),
         ]);
     }
-
     public function store(Request $request, CartRepository $cart)
     {
         $request->validate([
@@ -43,13 +40,11 @@ class CheckoutController extends Controller
         DB::beginTransaction();
         try {
             foreach ($items as $store_id => $cart_items) {
-
                 $order = Order::create([
                     'store_id' => $store_id,
                     'client_id' => Auth::id(),
                     'payment_method' => 'cod',
                 ]);
-
                 foreach ($cart_items as $item) {
                     OP::create([
                         'order_id' => $order->id,
@@ -59,7 +54,6 @@ class CheckoutController extends Controller
                         'quantity' => $item->quantity,
                     ]);
                 }
-
                 foreach ($request->post('addr') as $type => $address) {
                     $address['type'] = $type;
                     $order->addresses()->create($address);
@@ -67,14 +61,12 @@ class CheckoutController extends Controller
             }
             //$cart->empty();
             DB::commit();
-
             event(new OrderCreated($order));
-
-        } catch (Throwable $e) {
+        }
+        catch (Throwable $e) {
             DB::rollBack();
             throw $e;
         }
-
-        return redirect()->route('home');
+        return redirect()->route('orders.payments.create',$order->id);
     }
 }

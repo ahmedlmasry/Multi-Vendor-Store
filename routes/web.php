@@ -4,7 +4,9 @@ use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\CurrencyConverterController;
 use App\Http\Controllers\Front\MainController;
+use App\Http\Controllers\Front\PaymentController;
 use App\Http\Controllers\Front\ProductController;
+use App\Http\Controllers\Front\SocialLoginController;
 use App\Http\Controllers\Front\TwoFactorAuthentcationController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -23,6 +25,18 @@ Route::group(['prefix' => LaravelLocalization::setLocale(),
     Route::post('currency', [CurrencyConverterController::class, 'store'])
         ->name('currency.store');
 });
+
+Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])
+    ->name('auth.socialite.redirect');
+Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])
+    ->name('auth.socialite.callback');
+
+Route::get('/orders/{order}/pay', [PaymentController::class, 'create'])->name('orders.payments.create');
+Route::post('orders/{order}/stripe/payment-intent', [PaymentController::class, 'createStripePaymentIntent'])
+    ->name('stripe.paymentIntent.create');
+
+Route::get('orders/{order}/pay/stripe/callback', [PaymentController::class, 'confirm'])
+    ->name('stripe.return');
 
 require __DIR__ . '/dashboard.php';
 
