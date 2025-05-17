@@ -17,15 +17,6 @@ Route::group(['middleware' => 'auth:web','prefix' => 'admin'], function () {
     Route::resource('orders', OrderController::class);
 
 
-//    Route::resource('settings', SettingController::class);
-//    Route::resource('clients', ClientController::class);
-//    Route::get('/clients/activate/{id}', [ClientController::class, 'activate'])->name('clients.activate');
-//    Route::get('/clients/de-activate/{id}', [ClientController::class, 'deActivate'])->name('clients.de-activate');
-//    Route::resource('users', UserController::class);
-//    Route::resource('roles', RoleController::class);
-//    Route::get('change-password', [UserController::class, 'changePassword'])->name('change-password');
-//    Route::post('update-password', [UserController::class, 'updatePassword'])->name('update-password');
-//    Route::get('logout', [UserController::class, 'logout']);
 
 });
 
